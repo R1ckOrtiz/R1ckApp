@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+    <h1 class="text-center">Criar Conta</h1>
+    <br/>
+
+    <div class="card shadow-lg p-4 bg-dark text-light rounded">
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Nome de usuário</label>
+                {{ form.username }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_email" class="form-label">E-mail</label>
+                {{ form.email }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Senha</label>
+                {{ form.password1 }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirme sua senha</label>
+                {{ form.password2 }}
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-primary w-100">Registrar</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

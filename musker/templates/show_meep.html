@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-md-8">
+            <br/>
+
+            <!-- Card do Meep -->
+            <div class="card shadow-lg p-4 bg-dark text-light rounded">
+                <div class="container">
+                    <div class="row">
+                        <!-- Foto de perfil -->
+                        <div class="col-1">
+                            {% if meep.user.profile.profile_image %}
+                                <img src="{{ meep.user.profile.profile_image.url }}" width="50" height="50" class="rounded-circle border border-primary" alt="{{ meep.user.username }}">
+                            {% else %}
+                                <img src="{% static 'images/default_profile_pic.png' %}" width="50" height="50" class="rounded-circle border border-secondary" alt="Imagem de perfil padrão">
+                            {% endif %}
+                        </div>
+
+                        <!-- Conteúdo do Meep -->
+                        <div class="col-11 text-start">
+                            <p class="fw-bold">{{ meep.body }}</p>
+                            <small class="text-muted">
+                                ({{ meep.created_at }}) por 
+                                <strong class="text-primary">@{{ meep.user.username }}</strong>  
+                                - <span class="text-danger">{{ meep.number_of_likes }} curtidas</span>
+
+                                <!-- Botão de Curtir -->
+                                {% if user in meep.likes.all %}
+                                    <a href="{% url 'meep_like' meep.id %}" class="ms-2">
+                                        <i class="fa-solid fa-heart" style="color:red"></i>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'meep_like' meep.id %}" class="ms-2">
+                                        <i class="fa fa-heart-o" style="color:red"></i>
+                                    </a>
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de postagem -->
+        <div class="col-md-4">
+            <br/><br/><br/>
+            {% if form %}
+                <div class="card p-4 shadow-lg bg-light rounded">
+                    <h5 class="text-center">Criar um R1ck</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        <button type="submit" class="btn btn-primary w-100 mt-2">Postar R1ck</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
